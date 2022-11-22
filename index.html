@@ -6,10 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        th {
+            width:200px;
+        }
+
+        tr {
+
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    updated - 1<br>
     <label>Produkt</label> <input id="product" type="text"><br><br>
     <label>Pris</label> <input id="price" type="text"><br><br>
     <label>Link</label> <input id="link" type="text"><br><br>
@@ -35,9 +47,7 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child, update, remove } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getDatabase, ref, set, get, child, update, remove, onValue } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -134,7 +144,7 @@
         // Fill Table
         var tbody = document.getElementById('tbody1');
         function AddProductToTable(productName,productPrice,productLink) {
-            let trow = document.createElement("trow");
+            let trow = document.createElement("tr");
             let td1 = document.createElement("td");
             let td2 = document.createElement("td");
             let td3 = document.createElement("td");
@@ -184,10 +194,10 @@
                 });
 
                 AddAllToTable(products);
-            })
+            });
         }
 
-        window.onload = GetAllDataOnce;
+        window.onload = GetAllData;
     </script>
 </body>
 </html>
