@@ -17,29 +17,21 @@
     <button id="selectbtn">Select</button>
     <button id="updatebtn">Update</button>
     <button id="deletebtn">Delete</button>
+    <hr>
+    <div>
+        <table>
+            <thead>
+                <th>Produkt</th>
+                <th>Pris</th>
+                <th>Link</th>
+            </thead>
+            <tbody id="tbody1">
+    
+            </tbody>
+        </table>
+    </div>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child, update, remove } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
-            authDomain: "wishlist-ras1.firebaseapp.com",
-            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "wishlist-ras1",
-            storageBucket: "wishlist-ras1.appspot.com",
-            messagingSenderId: "380828569562",
-            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase();
-
         // References
         var product = document.getElementById("product");
         var price = document.getElementById("price");
@@ -84,7 +76,7 @@
         }
 
         // Update
-        function UpdateData {
+        function UpdateData() {
             update(ref(db, "Wishes/"+ product.value), {
                 NameOfProd: product.value,
                 PriceOfProd: price.value,
@@ -99,7 +91,7 @@
         }
 
         // Delete
-        function DeleteData {
+        function DeleteData() {
             remove(ref(db, "Wishes/"+ product.value))
             .then(()=>{
                 alert("Data entry removed successfully");
@@ -109,25 +101,101 @@
             });
         }
 
-        // Get Data
-        function GetAllData(){
-            const dbref = ref(db);
-
-            get(child(dbref, "Wishes"))
-            .then((snapshot)=>{
-                var productName =[];
-
-                snapshot.forEach(childSnapshot => {
-                    productName.push(childSnapshot.val());
-                });
-            })
-        }
-
         // Button events
         insertbtn.addEventListener("click", InsertData);
         selectbtn.addEventListener("click", SelectData);
         updatebtn.addEventListener("click", UpdateData);
         deletebtn.addEventListener("click", DeleteData);
+
+        
+
+        // Fill Table
+        var tbody = document.getElementById('tbody1');
+        function AddProductToTable(productName,productPrice,productLink) {
+            let trow = document.createElement("trow");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+
+            td1.innerHTML=productName;
+            td2.innerHTML=productPrice;
+            td3.innerHTML=productLink;
+
+            trow.appendChild(td1);
+            trow.appendChild(td2);
+            trow.appendChild(td3);
+
+            tbody.appendChild(trow);
+        }
+
+        function AddAllToTable(Wishes) {
+            tbody.innerHTML="";
+            Wishes.forEach(element => {
+                AddProductToTable(element.NameOfProd, element.PriceOfProd, element.LinkToProd);
+            });
+        }
+
+        // Get Data
+        /*function GetAllData(){
+            const dbref = ref(db,"Wishes");
+
+            onValue(dbref,(snapshot)=> {
+                var products =[];
+
+                snapshot.forEach(childSnapshot => {
+                    products.push(childSnapshot.val());
+                });
+
+                AddAllToTable(products);
+            });
+        }*/
+
+        function GetAllDataOnce(){
+            const dbref = ref(db);
+
+            get(child(dbref, "Wishes"))
+            .then((snapshot)=> {
+                var products =[];
+
+                snapshot.forEach(childSnapshot => {
+                    products.push(childSnapshot.val());
+                });
+
+                AddAllToTable(products);
+            })
+
+            window.onload = GetAllDataOnce;
+            /*onValue(dbref,(snapshot)=> {
+                var products =[];
+
+                snapshot.forEach(childSnapshot => {
+                    products.push(childSnapshot.val());
+                });
+
+                AddAllToTable(products);
+            });*/
+        }
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child, update, remove } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
+            authDomain: "wishlist-ras1.firebaseapp.com",
+            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "wishlist-ras1",
+            storageBucket: "wishlist-ras1.appspot.com",
+            messagingSenderId: "380828569562",
+            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
     </script>
 </body>
 </html>
