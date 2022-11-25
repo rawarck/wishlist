@@ -23,12 +23,39 @@
             width:70px;
             display:inline-block;
         }
+
+        #products {
+            display:flex; 
+            flex-direction: row;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+
+        .p_wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 180px;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+
+        .p_wrapper * {
+            text-align: center;
+        }
+
+        .p_wrapper button {
+            margin-top: 10px;
+        }
+        
+        .p_wrapper h3 {
+            margin-top: 0;
+        }
     </style>
 </head>
 
 <body>
     <label>Produkt</label> <input id="product" type="text"><br><br>
-    <label>Pris</label> <input id="price" type="text"><br><br>
+    <label>Pris</label> <input id="price" type="number"><br><br>
     <label>Link</label> <input id="link" type="text"><br><br>
 
     <button id="insertbtn">Add</button>
@@ -36,17 +63,7 @@
     <button id="updatebtn">Update</button>
     <button id="deletebtn">Delete</button>
     <hr>
-    <div>
-        <table>
-            <thead>
-                <th>Produkt</th>
-                <th>Pris</th>
-                <th>Link</th>
-            </thead>
-            <tbody id="tbody1">
-    
-            </tbody>
-        </table>
+    <div id="products">
     </div>
 
     <script type="module">
@@ -77,7 +94,7 @@
         var insertbtn = document.getElementById("insertbtn");
         var selectbtn = document.getElementById("selectbtn");
         var updatebtn = document.getElementById("updatebtn");
-        var deletebtn = document.getElementById("deletebtn");
+        
 
         // Insert
         function InsertData() {
@@ -98,8 +115,8 @@
         function SelectData() {
             const dbref = ref(db);
 
-            get(child(dbref,"Wishes/"+ product.value)).exists((snapshot)=> {
-                if(snapshot.exist()){
+            get(child(dbref,"Wishes/"+ product.value)).then((snapshot)=> {
+                if(snapshot.exists()){
                     product.value = snapshot.val().NameOfProd;
                     price.value = snapshot.val().PriceOfProd;
                     link.value = snapshot.val().LinkToProd;
@@ -147,26 +164,36 @@
         
 
         // Fill Table
-        var tbody = document.getElementById('tbody1');
+        var p_overview = document.getElementById('products');
         function AddProductToTable(productName,productPrice,productLink) {
-            let trow = document.createElement("tr");
-            let td1 = document.createElement("td");
-            let td2 = document.createElement("td");
-            let td3 = document.createElement("td");
+            let p_wrapper = document.createElement("div");
+            let p_price = document.createElement("span");
+            let p_name = document.createElement("h3");
+            let p_link = document.createElement("a");
+            let p_del = document.createElement("button");
 
-            td1.innerHTML=productName;
-            td2.innerHTML=productPrice;
-            td3.innerHTML=productLink;
+            p_name.innerHTML=productName;
+            p_price.innerHTML=productPrice;
+            p_link.innerHTML=productLink;
 
-            trow.appendChild(td1);
-            trow.appendChild(td2);
-            trow.appendChild(td3);
+            p_wrapper.appendChild(p_name);
+            p_wrapper.appendChild(p_price);
+            p_wrapper.appendChild(p_link);
+            p_wrapper.appendChild(p_del);
 
-            tbody.appendChild(trow);
+            p_overview.appendChild(p_wrapper);
+
+            p_link.setAttribute('href', productLink);
+            p_wrapper.setAttribute('class', 'p_wrapper');
+            p_name.setAttribute('class', 'p_name');
+            p_price.setAttribute('class', 'p_price');
+            p_link.setAttribute('class', 'p_link');
+            p_del.setAttribute('id', 'deletebtn');
+            p_del.innerText = "Delete";
         }
 
         function AddAllToTable(Wishes) {
-            tbody.innerHTML="";
+            p_overview.innerHTML="";
             Wishes.forEach(element => {
                 AddProductToTable(element.NameOfProd, element.PriceOfProd, element.LinkToProd);
             });
