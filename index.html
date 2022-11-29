@@ -42,7 +42,6 @@
 </head>
 
 <body>
-    <label>ID</label> <input id="iden" type="text"><br><br>
     <label>Produkt</label> <input id="product" type="text"><br><br>
     <label>Pris</label> <input id="price" type="number"><br><br>
     <label>Link</label> <input id="link" type="text"><br><br>
@@ -76,7 +75,6 @@
         const db = getDatabase();
 
         // References
-        var iden = document.getElementById("iden");
         var product = document.getElementById("product");
         var price = document.getElementById("price");
         var link = document.getElementById("link");
@@ -166,7 +164,6 @@
             p_price.innerHTML = productPrice;
             p_link.innerHTML = productLink;
 
-            p_wrapper.appendChild(p_id);
             p_wrapper.appendChild(p_name);
             p_wrapper.appendChild(p_price);
             p_wrapper.appendChild(p_link);
@@ -174,7 +171,6 @@
 
             p_overview.appendChild(p_wrapper);
 
-            p_id.setAttribute('id', "id_" + uniqueId);
             p_link.setAttribute('href', productLink);
             p_wrapper.setAttribute('class', 'p_wrapper');
             p_name.setAttribute('class', 'p_name');
@@ -187,7 +183,7 @@
         function AddAllToTable(Wishes) {
             p_overview.innerHTML = "";
             Wishes.forEach(element => {
-                AddProductToTable(element.uniqueId, element.NameOfProd, element.PriceOfProd, element.LinkToProd);
+                AddProductToTable(element.NameOfProd, element.PriceOfProd, element.LinkToProd);
             });
         }
 
