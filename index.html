@@ -8,24 +8,22 @@
     <title>Document</title>
     <style>
         th {
-            min-width:200px;
+            min-width: 200px;
         }
 
-        tr {
-
-        }
+        tr {}
 
         td {
             text-align: center;
         }
 
         label {
-            width:70px;
-            display:inline-block;
+            width: 70px;
+            display: inline-block;
         }
 
         #products {
-            display:flex; 
+            display: flex;
             flex-direction: row;
             justify-content: space-evenly;
             flex-wrap: wrap;
@@ -46,7 +44,7 @@
         .p_wrapper button {
             margin-top: 10px;
         }
-        
+
         .p_wrapper h3 {
             margin-top: 0;
         }
@@ -94,29 +92,29 @@
         var insertbtn = document.getElementById("insertbtn");
         var selectbtn = document.getElementById("selectbtn");
         var updatebtn = document.getElementById("updatebtn");
-        
+
 
         // Insert
         function InsertData() {
-            set(ref(db, "Wishes/"+ product.value), {
+            set(ref(db, "Wishes/" + product.value), {
                 NameOfProd: product.value,
                 PriceOfProd: price.value,
                 LinkToProd: link.value
             })
-            .then(()=>{
-                alert("Data entry stored successfully");
-            })
-            .catch(()=>{
-                alert("Data entry not stored"+error);
-            });
+                .then(() => {
+                    alert("Data entry stored successfully");
+                })
+                .catch(() => {
+                    alert("Data entry not stored" + error);
+                });
         }
 
         // Select
         function SelectData() {
             const dbref = ref(db);
 
-            get(child(dbref,"Wishes/"+ product.value)).then((snapshot)=> {
-                if(snapshot.exists()){
+            get(child(dbref, "Wishes/" + product.value)).then((snapshot) => {
+                if (snapshot.exists()) {
                     product.value = snapshot.val().NameOfProd;
                     price.value = snapshot.val().PriceOfProd;
                     link.value = snapshot.val().LinkToProd;
@@ -124,35 +122,35 @@
                     alert("No data found");
                 }
             })
-            .catch((error)=> {
-                alert("Data entry not stored"+error);
-            });
+                .catch((error) => {
+                    alert("Data entry not stored" + error);
+                });
         }
 
         // Update
         function UpdateData() {
-            update(ref(db, "Wishes/"+ product.value), {
+            update(ref(db, "Wishes/" + product.value), {
                 NameOfProd: product.value,
                 PriceOfProd: price.value,
                 LinkToProd: link.value
             })
-            .then(()=>{
-                alert("Data entry updated successfully");
-            })
-            .catch(()=>{
-                alert("Data entry not stored"+error);
-            });
+                .then(() => {
+                    alert("Data entry updated successfully");
+                })
+                .catch(() => {
+                    alert("Data entry not stored" + error);
+                });
         }
 
         // Delete
         function DeleteData() {
-            remove(ref(db, "Wishes/"+ product.value))
-            .then(()=>{
-                alert("Data entry removed successfully");
-            })
-            .catch(()=>{
-                alert("Data entry not stored"+error);
-            });
+            remove(ref(db, "Wishes/" + product.value))
+                .then(() => {
+                    alert("Data entry removed successfully");
+                })
+                .catch(() => {
+                    alert("Data entry not stored" + error);
+                });
         }
 
         // Button events
@@ -161,20 +159,20 @@
         updatebtn.addEventListener("click", UpdateData);
         deletebtn.addEventListener("click", DeleteData);
 
-        
+
 
         // Fill Table
         var p_overview = document.getElementById('products');
-        function AddProductToTable(productName,productPrice,productLink) {
+        function AddProductToTable(productName, productPrice, productLink) {
             let p_wrapper = document.createElement("div");
             let p_price = document.createElement("span");
             let p_name = document.createElement("h3");
             let p_link = document.createElement("a");
             let p_del = document.createElement("button");
 
-            p_name.innerHTML=productName;
-            p_price.innerHTML=productPrice;
-            p_link.innerHTML=productLink;
+            p_name.innerHTML = productName;
+            p_price.innerHTML = productPrice;
+            p_link.innerHTML = productLink;
 
             p_wrapper.appendChild(p_name);
             p_wrapper.appendChild(p_price);
@@ -193,18 +191,18 @@
         }
 
         function AddAllToTable(Wishes) {
-            p_overview.innerHTML="";
+            p_overview.innerHTML = "";
             Wishes.forEach(element => {
                 AddProductToTable(element.NameOfProd, element.PriceOfProd, element.LinkToProd);
             });
         }
 
         // Get Data
-        function GetAllData(){
-            const dbref = ref(db,"Wishes");
+        function GetAllData() {
+            const dbref = ref(db, "Wishes");
 
-            onValue(dbref,(snapshot)=> {
-                var products =[];
+            onValue(dbref, (snapshot) => {
+                var products = [];
 
                 snapshot.forEach(childSnapshot => {
                     products.push(childSnapshot.val());
@@ -214,22 +212,23 @@
             });
         }
 
-        function GetAllDataOnce(){
+        function GetAllDataOnce() {
             const dbref = ref(db);
 
             get(child(dbref, "Wishes"))
-            .then((snapshot)=> {
-                var products =[];
+                .then((snapshot) => {
+                    var products = [];
 
-                snapshot.forEach(childSnapshot => {
-                    products.push(childSnapshot.val());
+                    snapshot.forEach(childSnapshot => {
+                        products.push(childSnapshot.val());
+                    });
+
+                    AddAllToTable(products);
                 });
-
-                AddAllToTable(products);
-            });
         }
 
         window.onload = GetAllData;
     </script>
 </body>
+
 </html>
