@@ -4,9 +4,137 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< Updated upstream
     <title>Document</title>
+=======
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin: 0px;
+        }
+    </style>
+>>>>>>> Stashed changes
 </head>
 <body>
+<<<<<<< Updated upstream
     test
+=======
+    <div class="mb-5">
+        <h3 class="mb-3">Sign Up</h3>
+        <input type="text" placeholder="Full Name" id="nameInput" class="form-control mb-3">
+        <input type="text" placeholder="Email" id="emailInput" class="form-control mb-3">
+        <input type="text" placeholder="Username" id="userInput" class="form-control mb-3">
+        <input type="password" placeholder="Password" id="passInput" class="form-control mb-3">
+        <button type="text" id="sub_btn" class="btn w-100 btn-outline-primary mb-3">Sign Up</button>
+        <a href="login.html" class="badge text-bg-secondary py-1 w-100">Already have an account?</a>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child, update, remove, onValue, push } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
+            authDomain: "wishlist-ras1.firebaseapp.com",
+            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "wishlist-ras1",
+            storageBucket: "wishlist-ras1.appspot.com",
+            messagingSenderId: "380828569562",
+            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        // Refs
+        const name = document.getElementById("nameInput");
+        const email = document.getElementById("emailInput");
+        const username = document.getElementById("userInput");
+        const pass = document.getElementById("passInput");
+        const submit = document.getElementById("sub_btn");
+
+        // Validation
+        function isEmptyOrSpaces(str){
+            return str === null || str.match(/^ *$/) !== null;
+        }
+
+        function Validation() {
+            let nameregex = /^[a-zA-Z]+$/;
+            let emailregex = /^[a-zA-Z0-9]+@(gmail|yahoo|outlook|msn)\.com$/;
+            let userregex = /^[a-zA-Z0-9]{5,}$/
+            
+            if(isEmptyOrSpaces(name.value) || isEmptyOrSpaces(email.value) || isEmptyOrSpaces(username.value) || isEmptyOrSpaces(pass.value)){
+                alert("You cannot leave any fields empty");
+                return false;
+            }
+
+            if (!nameregex.test(name.value)) {
+                alert("The name should only contain alphabet characters");
+                return false;
+            }
+
+            if (!emailregex.test(email.value)) {
+                alert("Enter a valid email");
+                return false;
+            }
+
+            if (!userregex.test(username.value)) {
+                alert("-username can only be alphanumeric\n-username must be atleast 5 characters\n-username cannot contain spaces");
+                return false;
+            }
+
+            return true;
+        }
+
+        // Register to firebase database
+        function RegisterUser() {
+            if(!Validation()) {
+                return;
+            };
+            const dbRef = ref(db);
+
+            get(child(dbRef, "Userlist/" + username.value)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    alert("Account already exists!");
+                } else {
+                    set(ref(db, "Userlist/" + username.value),
+                        {
+                            fullname: name.value,
+                            email: email.value,
+                            username: username.value,
+                            password: encPass()
+                        })
+                        .then(() => {
+                            alert("User has been added successfully");
+                        })
+                        .catch(() => {
+                            alert("Error" + error);
+                        })
+                }
+            });
+        }
+
+        // Encryption
+        function encPass(){
+            var pass12 = CryptoJS.AES.encrypt(pass.value, pass.value);
+            return pass12.toString();
+        }
+
+        // Assign the events
+        submit.addEventListener('click', RegisterUser);
+    </script>
+>>>>>>> Stashed changes
 </body>
+
 </html>
