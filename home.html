@@ -135,17 +135,6 @@
             <div class="relative px-6 lg:px-8">
                 <div class="mx-auto max-w-10xl pt-20 pb-32 sm:pt-48 sm:pb-40">
                     <div>
-                        <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-                            <div
-                                class="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                                <span class="text-gray-600">
-                                    Announcing our next round of funding. <a href="#"
-                                        class="font-semibold text-indigo-600"><span class="absolute inset-0"
-                                            aria-hidden="true"></span>Read more <span
-                                            aria-hidden="true">&rarr;</span></a>
-                                </span>
-                            </div>
-                        </div>
                         <div>
                             <h1 id="hh" class="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">You're not
                                 logged in.</h1>
@@ -164,33 +153,6 @@
                             <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
                                 <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
                                     id="productsDiv">
-                                    <div
-                                        class="group relative outline-offset-8 outline-blue-500 outline-1 outline rounded-sm productcard">
-                                        <div
-                                            class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                                            <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-                                                alt="Front of men&#039;s Basic Tee in black."
-                                                class="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                                id="thumb1">
-                                        </div>
-                                        <div class="mt-4 flex justify-between flex-wrap">
-                                            <div>
-                                                <h3 class="text-sm text-gray-700 title" id="title1">
-                                                    Basic Tee
-                                                </h3>
-                                                <p class="mt-1 text-sm text-gray-500">Black</p>
-                                            </div>
-                                            <p class="text-sm font-medium text-gray-900">$35</p>
-                                            <a href="add-product.html"
-                                                class="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700 mx-auto mt-6 grow w-100 text-center px-8 detbtns"
-                                                id="detbtn">
-                                                See product
-                                                <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <!-- More products... -->
                                 </div>
                             </div>
                         </div>
@@ -215,26 +177,6 @@
         </main>
     </div>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child, update, remove, onValue, push } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
-        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
-            authDomain: "wishlist-ras1.firebaseapp.com",
-            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "wishlist-ras1",
-            storageBucket: "wishlist-ras1.appspot.com",
-            messagingSenderId: "380828569562",
-            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase();
-
-
         // Refs
         let userlink = document.getElementById("userlink");
         let signoutlink = document.getElementById("signoutlink");
@@ -242,7 +184,62 @@
         let login_btn = document.getElementById("login_here");
         var currentuser = null;
 
+        var outerDiv = document.getElementById("productsDiv");
+        var ArrayOfProducts = [];
+        window.addEventListener("load", GetAllProducts);
+
+        function GetAllProducts() {
+            const dbref = ref(realdb);
+
+            get(child(dbref, "Userlist/" + currentuser.username + "/wishes/"))
+            .then((snapshot) => {
+                snapshot.forEach(prod => {
+                    ArrayOfProducts.push(prod.val());
+                });
+
+                AddAllProducts();
+            })
+        }
+
         // Functions
+        function AddAllProducts() {
+            let i = 0;
+            ArrayOfProducts.forEach(prod => {
+                AddAProduct(prod. i++);
+            });
+        }
+
+        function AddAProduct(product, index) {
+            let html = 
+            `
+            <div
+                class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                <img src=""
+                    class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    id="thumb`+ index +`">
+            </div>
+            <div class="mt-4 flex justify-between flex-wrap">
+                <div>
+                    <h3 class="text-sm text-gray-700 title" id="title`+ index +`">
+                        `+ product.ProductTitle +`
+                    </h3>
+                </div>
+                <p class="text-sm font-medium text-gray-900 price">$`+ product.ProductPrice +`</p>
+                <a href="`+ product.ProductLink +`"
+                    class="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700 mx-auto mt-6 grow w-100 text-center px-8 detbtns"
+                    id="detbtn">
+                    See product
+                    <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
+                </a>
+            </div>
+            `
+
+            let newProd = document.createElement("div");
+            newProd.classList.add("productcard");
+            newProd.innerHTML = html;
+            outerDiv.append(newProd);
+        }
+
         function getUsername() {
             let keepLoggedIn = localStorage.getItem("keepLoggedIn");
 
@@ -293,6 +290,24 @@
                 signoutlink.href = "javascript:signout()";
             }
         }
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child, update, remove, onValue, push } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
+            authDomain: "wishlist-ras1.firebaseapp.com",
+            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "wishlist-ras1",
+            storageBucket: "wishlist-ras1.appspot.com",
+            messagingSenderId: "380828569562",
+            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const realdb = getDatabase();
     </script>
 </body>
 
