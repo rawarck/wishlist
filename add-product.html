@@ -187,7 +187,10 @@
                                     <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
                                 </a>
                             </div>
+                            
                         </div>
+                        <div id="label"></div>
+                        <div id="proglab"></div>
                         <div
                             class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
                             <svg class="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
@@ -254,7 +257,7 @@
 
         function CreateImgTags() {
             imgDiv.innerHTML = "";
-            imgDiv.classList.add("wasd");
+            imgDiv.classList.add("ImagesDivStyle");
 
             for (let i = 0; i < Files.length; i++) {
                 FileReaders[i] = new FileReader();
@@ -269,12 +272,27 @@
 
                 FileReaders[i].readAsDataURL(Files[i]);
             }
+
+            let lab = document.getElementById("label");
+            lab.innerHTML = "clear images";
+            lab.style = "cursor:pointer;display:block;color:navy;font-size:12px;";
+            lab.addEventListener("click", ClearImages);
+            imgDiv.append(lab);
+        }
+
+        function ClearImages() {
+            Files=[];
+            ImageLinksArray=[];
+            imgDiv.innerHTML="";
+            imgDiv.classList.remove("ImagesDivStyle")
+
         }
 
         selBtn.addEventListener('click', OpenFileDialog);
+        addBtn.addEventListener('click', UploadAProduct);
 
         function getShortTitle() {
-            let namey = name.value.substring(0,50);
+            let namey = prodName.value.substring(0,50);
             return namey.replace(/[^a-zA-Z0-9]/g,"");
         }
 
@@ -287,6 +305,22 @@
         }
 
         //Upload to DB
+        function RestoreBack() {
+            selBtn.disabled = false;
+            addBtn.disabled = false;
+        }
+
+        /*function UploadAllImages() {
+            selBtn.disabled = true;
+            addBtn.disabled = true;
+
+            ImageLinksArray=[];
+
+            for (let i = 0; i < Files.length; i++) {
+                UploadAnImage(Files[i], i);
+            }
+        }
+
         function UploadAnImage(imgToUpload, imgNo) {
             const metadata = {
                 contentType: imgToUpload.type
@@ -294,15 +328,15 @@
 
             const storage = getStorage();
 
-            const ImageAddress = "TheImages/" + getShortTitle() + "img#"+(imgNo+1);
+            const ImageAddress = "TheImages/" + getShortTitle() + "/img#"+(imgNo+1);
 
             const storageRef = sRef(storage, ImageAddress);
 
             const UploadTask = uploadBytesResumable(storageRef, imgToUpload, metadata);
 
-            UploadTask.on('state-changed', (snapshot) => {
+            UploadTask.on('state_changed', (snapshot) => {
                 proglab.innerHTML = GetImgUploadProgress();
-            }),
+            },
 
             (error) => {
                 alert("Error: image upload failed");
@@ -311,12 +345,24 @@
             () => {
                 getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
                     ImageLinksArray.push(downloadURL);
-                    if(IsAllImagesUploaded) {
+                    if(IsAllImagesUploaded()) {
                         proglab.innerHTML = "all images uploaded";
                         UploadAProduct();
                     }
                 })
-            };
+            });
+        }*/
+
+        function UploadAProduct() {
+            set(ref(realdb, "Userlist/" + currentuser.username + "/wishes/" + getShortTitle()), {
+                ProductTitle: prodName.value,
+                ProductPrice: prodPrice.value,
+                ProductLink: prodLink.value/*,
+                LinkOfImagesArray: ImageLinksArray*/
+            });
+
+            alert("Product created successfully");
+            RestoreBack();
         }
 
         function getUsername() {
@@ -362,6 +408,25 @@
                 signoutlink.href = "javascript:signout()";
             }
         }
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child, update, remove, onValue, push } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
+            authDomain: "wishlist-ras1.firebaseapp.com",
+            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "wishlist-ras1",
+            storageBucket: "wishlist-ras1.appspot.com",
+            messagingSenderId: "380828569562",
+            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const realdb = getDatabase();
     </script>
 </body>
 
