@@ -166,12 +166,15 @@
                             <div id="imagesDiv" class="flex justify-center mt-4"></div>
 
                             <div id="controlDiv" class="mt-4 flex justify-center">
-                                <button id="addprodbtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-1">
+                                <button id="addprodbtn"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-1">
                                     Add product
                                 </button>
-                                <button id="selimgbtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-1">
+                                <button id="selimgbtn"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-1">
                                     Select image
-                                </button>                            </div>
+                                </button>
+                            </div>
 
                             <div class="mt-8 flex gap-x-4 sm:justify-center">
                                 <a href="home.html"
@@ -181,7 +184,7 @@
                                     <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
                                 </a>
                             </div>
-                            
+
                         </div>
                         <div id="label"></div>
                         <div id="proglab"></div>
@@ -240,13 +243,13 @@
 
         function AssignImgsToFilesArray(thefiles) {
             let num = Files.length + thefiles.length;
-            let looplim = (num <= 1) ? thefiles.length : (1-Files.length);
+            let looplim = (num <= 1) ? thefiles.length : (1 - Files.length);
 
             for (let i = 0; i < looplim; i++) {
                 Files.push(thefiles[i]);
             }
 
-            if (num>10) alert("Maximum images allowed are 1");
+            if (num > 10) alert("Maximum images allowed are 1");
         }
 
         function CreateImgTags() {
@@ -256,10 +259,10 @@
             for (let i = 0; i < Files.length; i++) {
                 FileReaders[i] = new FileReader();
 
-                FileReaders[i].onload = function() {
+                FileReaders[i].onload = function () {
                     var img = document.createElement("img");
                     img.id = "imgno" + i;
-                    img.classList.add("imgs", "outline", "outline-1", "outline-offset-4", "outline-blue-500", "rounded-md"); 
+                    img.classList.add("imgs", "outline", "outline-1", "outline-offset-4", "outline-blue-500", "rounded-md");
                     img.src = FileReaders[i].result;
                     imgDiv.append(img);
                 }
@@ -275,9 +278,9 @@
         }
 
         function ClearImages() {
-            Files=[];
-            ImageLinksArray=[];
-            imgDiv.innerHTML="";
+            Files = [];
+            ImageLinksArray = [];
+            imgDiv.innerHTML = "";
             imgDiv.classList.remove("ImagesDivStyle")
 
         }
@@ -286,8 +289,8 @@
         addBtn.addEventListener('click', UploadAllImages);
 
         function getShortTitle() {
-            let namey = prodName.value.substring(0,50);
-            return namey.replace(/[^a-zA-Z0-9]/g,"");
+            let namey = prodName.value.substring(0, 50);
+            return namey.replace(/[^a-zA-Z0-9]/g, "");
         }
 
         function GetImgUploadProgress() {
@@ -308,7 +311,7 @@
             selBtn.disabled = true;
             addBtn.disabled = true;
 
-            ImageLinksArray=[];
+            ImageLinksArray = [];
 
             for (let i = 0; i < Files.length; i++) {
                 UploadAnImage(Files[i], i);
@@ -322,7 +325,7 @@
 
             const storage = getStorage();
 
-            const ImageAddress = "TheImages/" + getShortTitle() + "/img#"+(imgNo+1);
+            const ImageAddress = "TheImages/" + getShortTitle() + "/img#" + (imgNo + 1);
 
             const storageRef = sRef(storage, ImageAddress);
 
@@ -332,19 +335,19 @@
                 proglab.innerHTML = GetImgUploadProgress();
             },
 
-            (error) => {
-                alert("Error: image upload failed");
-            },
+                (error) => {
+                    alert("Error: image upload failed");
+                },
 
-            () => {
-                getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
-                    ImageLinksArray.push(downloadURL);
-                    if(IsAllImagesUploaded()) {
-                        proglab.innerHTML = "all images uploaded";
-                        UploadAProduct();
-                    }
-                })
-            });
+                () => {
+                    getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
+                        ImageLinksArray.push(downloadURL);
+                        if (IsAllImagesUploaded()) {
+                            proglab.innerHTML = "all images uploaded";
+                            UploadAProduct();
+                        }
+                    })
+                });
         }
 
         function UploadAProduct() {
