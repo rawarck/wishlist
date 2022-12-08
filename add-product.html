@@ -289,7 +289,7 @@
         }
 
         selBtn.addEventListener('click', OpenFileDialog);
-        addBtn.addEventListener('click', UploadAProduct);
+        addBtn.addEventListener('click', UploadAllImages);
 
         function getShortTitle() {
             let namey = prodName.value.substring(0,50);
@@ -310,7 +310,7 @@
             addBtn.disabled = false;
         }
 
-        /*function UploadAllImages() {
+        function UploadAllImages() {
             selBtn.disabled = true;
             addBtn.disabled = true;
 
@@ -351,17 +351,18 @@
                     }
                 })
             });
-        }*/
+        }
 
         function UploadAProduct() {
             set(ref(realdb, "Userlist/" + currentuser.username + "/wishes/" + getShortTitle()), {
                 ProductTitle: prodName.value,
                 ProductPrice: prodPrice.value,
-                ProductLink: prodLink.value/*,
-                LinkOfImagesArray: ImageLinksArray*/
+                ProductLink: prodLink.value,
+                LinkOfImagesArray: ImageLinksArray
             });
 
             alert("Product created successfully");
+            window.location = "add-product.html"
             RestoreBack();
         }
 
