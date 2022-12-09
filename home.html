@@ -186,7 +186,7 @@
         function GetAllProducts() {
             const dbref = ref(realdb);
 
-            get(child(dbref, "Userlist/rawarck/wishes"))
+            get(child(dbref, "Userlist/"+ currentuser.username +"/wishes"))
                 .then((snapshot) => {
                     snapshot.forEach(prod => {
                         ArrayOfProducts.push(prod.val());
