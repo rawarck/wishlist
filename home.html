@@ -125,7 +125,7 @@
         </div>
         <main>
             <div class="relative px-6 lg:px-8">
-                <div class="mx-auto max-w-10xl pt-20 pb-32 sm:pt-48 sm:pb-40">
+                <div class="mx-auto max-w-10xl pt-20 pb-32 sm:pt-24 sm:pb-40">
                     <div>
                         <div>
                             <h1 id="hh" class="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">You're not
@@ -274,7 +274,7 @@
                 window.location = "login.html";
             } else {
                 userlink.innerText = currentuser.username;
-                header.innerText = "Welcome, " + currentuser.fullname;
+                header.innerText = "Welcome, " + currentuser.fullname + ".";
                 userlink.classList.replace("btn", "nav-link");
                 userlink.classList.add("btn-primary");
                 userlink.href = "#";
