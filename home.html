@@ -102,7 +102,7 @@
                     <div class="relative ml-3">
                         <div>
                             <a id="signoutlink"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">Sign
                                 Out</a>
                         </div>
                     </div>
@@ -212,7 +212,7 @@
                         class="h-full w-full object-cover object-center lg:h-full lg:w-full"
                         id="thumb`+ index + `">
                 </div>
-                <div class="mt-4 flex justify-between flex-wrap">
+                <div class="mt-2 flex justify-between flex-wrap">
                     <div>
                         <h3 class="text-sm text-gray-700 title" id="title`+ index + `">
                             `+ product.ProductTitle + `
@@ -226,9 +226,11 @@
                         <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
-                `
+                `;
 
-            let newProd = document.createElement("div");
+            let newProd = document.createElement("a");
+            newProd.setAttribute("href", "https://" + product.ProductLink);
+            newProd.setAttribute("target", "_blank");
             newProd.classList.add("productcard");
             newProd.innerHTML = html;
             outerDiv.append(newProd);
@@ -248,11 +250,11 @@
             sessionStorage.removeItem("user");
             localStorage.removeItem("user");
             localStorage.removeItem("keepLoggedIn");
-            window.location = "home.html"
+            window.location = "login.html"
         }
 
         function getShortTitle() {
-            if (title.length > 49) title = title.substring(0, 47);
+            if (title.length > 20) title = title.substring(0, 17);
             else return title;
             return title + "...";
         }
@@ -281,7 +283,7 @@
                 signoutlink.innerText = "Sign out";
                 signoutlink.classList.replace("btn", "nav-link");
                 signoutlink.classList.add("btn-success");
-                signoutlink.href = "javascript:signout()";
+                signoutlink.addEventListener ("click", signout);
             }
         }
 
