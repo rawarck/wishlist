@@ -230,7 +230,7 @@
             let newProd = document.createElement("a");
             newProd.setAttribute("href", "https://" + product.ProductLink);
             newProd.setAttribute("target", "_blank");
-            newProd.classList.add("productcard");
+            newProd.classList.add("productcard", "p-2", "hover:outline", "hover:outline-blue-500", "outline-1", "outline-transparent", "rounded-lg", "transition-all");
             newProd.innerHTML = html;
             outerDiv.append(newProd);
         }
