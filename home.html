@@ -182,7 +182,7 @@
 
         // Functions
         function GetAllProducts() {
-            getUsername();
+            getUsername(currentuser);
             const dbref = ref(realdb);
 
             get(child(dbref, "Userlist/"+ currentuser.username +"/wishes"))
