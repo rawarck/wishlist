@@ -168,7 +168,7 @@
             </div>
         </main>
         <div shareLink="test" onclick="getShareUserValue(this);" id="shareBtn"
-            class="w-14 py-2 bg-slate-700 text-white fixed right-2 top-2/4 -translate-y-2/4 flex justify-center items-center text-sm rounded-full">
+            class="w-14 py-2 bg-slate-700 text-white fixed right-2 top-2/4 -translate-y-2/4 flex justify-center items-center text-sm rounded-full cursor-pointer">
             Share
         </div>
     </div>
@@ -292,7 +292,7 @@
                 window.location = "login.html";
             } else {
                 userlink.innerText = currentuser.username;
-                shareBtn.setAttribute("shareLink", window.location.origin + "/share.html#" + currentuser.username + "|" + currentuser.uniqueID);
+                shareBtn.setAttribute("shareLink", window.location.origin + "/wishlist/share.html#" + currentuser.username + "|" + currentuser.uniqueID);
                 header.innerText = "Welcome, " + currentuser.fullname + ".";
                 userlink.classList.replace("btn", "nav-link");
                 userlink.classList.add("btn-primary");
