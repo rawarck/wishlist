@@ -292,7 +292,7 @@
                 window.location = "login.html";
             } else {
                 userlink.innerText = currentuser.username;
-                shareBtn.setAttribute("shareLink", window.location.origin + "/wishlist/share.html#" + currentuser.username + "|" + currentuser.uniqueID);
+                shareBtn.setAttribute("shareLink", window.location.origin + "/share.html#" + currentuser.username + "|" + currentuser.uniqueID);
                 header.innerText = "Welcome, " + currentuser.fullname + ".";
                 userlink.classList.replace("btn", "nav-link");
                 userlink.classList.add("btn-primary");
