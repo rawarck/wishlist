@@ -31,7 +31,7 @@
             <label class="form-check-label" for="flexSwitchCheckDefault">Keep me logged in</label>
         </div>
         <button type="text" id="sub_btn" class="btn w-100 btn-outline-primary mb-3">Login</button>
-        <a href="register.html" class="badge text-bg-secondary py-1 w-100">Create new account here</a>
+        <a href="index.html" class="badge text-bg-secondary py-1 w-100">Create new account here</a>
     </div>
 
     <script type="module">
@@ -59,6 +59,12 @@
         const pass = document.getElementById("passInput");
         const submit = document.getElementById("sub_btn");
 
+        // Retrieve the saved value from localStorage
+        var savedValue = localStorage.getItem("usernameCarryOver");
+
+        // Set the value of the input field to the saved value
+        document.getElementById("userInput").value = savedValue;
+
         // Auth
         function AuthenticateUser() {
             const dbRef = ref(db);
@@ -66,7 +72,7 @@
             get(child(dbRef, "Userlist/" + username.value)).then((snapshot) => {
                 if (snapshot.exists()) {
                     let dbpass = decPass(snapshot.val().password);
-                    if(dbpass == pass.value){
+                    if (dbpass == pass.value) {
                         login(snapshot.val());
                     } else {
                         alert("User does not exist");
@@ -78,22 +84,22 @@
         }
 
         // Decrypt
-        function decPass(dbpass){
+        function decPass(dbpass) {
             var pass12 = CryptoJS.AES.decrypt(dbpass, pass.value);
             return pass12.toString(CryptoJS.enc.Utf8);
         }
 
         // Login
-        function login(user){
+        function login(user) {
             let keepLoggedIn = document.getElementById("flexSwitchCheckDefault").checked;
 
-            if(!keepLoggedIn){
+            if (!keepLoggedIn) {
                 sessionStorage.setItem("user", JSON.stringify(user));
-                window.location="home.html";
+                window.location = "home.html";
             } else {
                 localStorage.setItem("keepLoggedIn", "yes");
                 localStorage.setItem("user", JSON.stringify(user));
-                window.location="home.html";
+                window.location = "home.html";
             }
         }
 

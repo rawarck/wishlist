@@ -167,13 +167,31 @@
                 </div>
             </div>
         </main>
+        <div shareLink="test" onclick="getShareUserValue(this);" id="shareBtn"
+            class="w-14 py-2 bg-slate-700 text-white fixed right-2 top-2/4 -translate-y-2/4 flex justify-center items-center text-sm rounded-full">
+            Share
+        </div>
     </div>
+    <script>
+        function getShareUserValue(element) {
+            var attributeValue = element.getAttribute('shareLink');
+            var tempInput = document.createElement("input");
+            tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+            tempInput.value = attributeValue;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+    </script>
     <script type="module">
         // Refs
         let userlink = document.getElementById("userlink");
         let signoutlink = document.getElementById("signoutlink");
         let header = document.getElementById("hh");
         let login_btn = document.getElementById("login_here");
+        let shareBtn = document.getElementById("shareBtn");
+        let wasd = window.location.host;
         var currentuser = null;
 
         var outerDiv = document.getElementById("productsDiv");
@@ -185,7 +203,7 @@
             getUsername(currentuser);
             const dbref = ref(realdb);
 
-            get(child(dbref, "Userlist/"+ currentuser.username +"/wishes"))
+            get(child(dbref, "Userlist/" + currentuser.username + "/wishes"))
                 .then((snapshot) => {
                     snapshot.forEach(prod => {
                         ArrayOfProducts.push(prod.val());
@@ -265,7 +283,7 @@
                 userlink.innerText = "Create new account";
                 userlink.classList.replace("nav-link", "btn");
                 userlink.classList.add("btn-primary");
-                userlink.href = "register.html";
+                userlink.href = "index.html";
 
                 signoutlink.innerText = "Login";
                 signoutlink.classList.replace("nav-link", "btn");
@@ -274,6 +292,7 @@
                 window.location = "login.html";
             } else {
                 userlink.innerText = currentuser.username;
+                shareBtn.setAttribute("shareLink", window.location.origin + "/share.html#" + currentuser.username + "|" + currentuser.uniqueID);
                 header.innerText = "Welcome, " + currentuser.fullname + ".";
                 userlink.classList.replace("btn", "nav-link");
                 userlink.classList.add("btn-primary");
@@ -282,7 +301,7 @@
                 signoutlink.innerText = "Sign out";
                 signoutlink.classList.replace("btn", "nav-link");
                 signoutlink.classList.add("btn-success");
-                signoutlink.addEventListener ("click", signout);
+                signoutlink.addEventListener("click", signout);
             }
         }
 

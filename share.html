@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <title>Add product</title>
+    <title>Share</title>
 </head>
 
 <body>
@@ -57,17 +58,19 @@
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <a href="home.html"
                                 class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                aria-current="page">Products</a>
+                                aria-current="page" id="showallprods">Products</a>
 
                             <a href="add-product.html"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                id="addproduct">Add
                                 Product</a>
                         </div>
                     </div>
                 </div>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button type="button"
-                        class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        id="notification">
                         <span class="sr-only">View notifications</span>
                         <!-- Heroicon name: outline/bell -->
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -78,7 +81,7 @@
                     </button>
 
                     <!-- Profile dropdown -->
-                    <div class="relative ml-3">
+                    <div class="relative ml-3" id="avatar">
                         <div>
                             <button type="button"
                                 class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -99,7 +102,7 @@
                     <div class="relative ml-3">
                         <div>
                             <a id="signoutlink"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">Sign
                                 Out</a>
                         </div>
                     </div>
@@ -124,67 +127,22 @@
         </div>
         <main>
             <div class="relative px-6 lg:px-8">
-                <div class="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
+                <div class="mx-auto max-w-10xl pt-20 pb-32 sm:pt-24 sm:pb-40">
                     <div>
                         <div>
-                            <h1 class="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">Add product</h1>
-                            <p class="mt-6 text-lg leading-8 text-gray-600 sm:text-center">Fill out the form to add a
-                                product to the wishlist</p>
-                            <div class="lg:flex justify-between">
-                                <div class="mt-2">
-                                    <label for="price" class="block text-sm font-medium text-gray-700">Product
-                                        name</label>
-                                    <div class="relative mt-1 rounded-md shadow-sm w-60">
-                                        <input type="text" name="name" id="nameInput"
-                                            class="block w-full rounded-md border-gray-300 pl-4 pr-12 h-8 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                            placeholder="Steam Deck">
-                                    </div>
-                                </div>
-                                <div class="mt-2">
-                                    <label for="price" class="block text-sm font-medium text-gray-700">Product
-                                        price</label>
-                                    <div class="relative mt-1 rounded-md shadow-sm w-60">
-                                        <input type="number" name="price" id="priceInput"
-                                            class="block w-full rounded-md border-gray-300 pl-4 pr-1 h-8 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                            placeholder="0.00">
-                                    </div>
-                                </div>
-                                <div class="mt-2">
-                                    <label for="price" class="block text-sm font-medium text-gray-700">Product
-                                        link</label>
-                                    <div class="relative mt-1 rounded-md shadow-sm w-60">
-                                        <input type="text" name="link" id="linkInput"
-                                            class="block w-full rounded-md border-gray-300 pl-4 pr-12 h-8 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                            placeholder="https://www.google.dk">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="imagesDiv" class="flex justify-center mt-4"></div>
-
-                            <div id="controlDiv" class="mt-4 flex justify-center">
-                                <button id="addprodbtn"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-1">
-                                    Add product
-                                </button>
-                                <button id="selimgbtn"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-1">
-                                    Select image
-                                </button>
-                            </div>
-
-                            <div class="mt-8 flex gap-x-4 sm:justify-center">
-                                <a href="home.html"
-                                    class="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700"
-                                    id="login_here">
-                                    See your wishlist here
-                                    <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
-                                </a>
-                            </div>
-
+                            <h1 id="hh" class="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">What is
+                                <span id="username">username</span> wishing for?
+                            </h1>
+                            <p class="mt-6 text-lg leading-8 text-gray-600 sm:text-center">Here's a list of the current
+                                products on the wishlist:</p>
                         </div>
-                        <div id="label"></div>
-                        <div id="proglab"></div>
+                        <div>
+                            <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+                                <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+                                    id="productsDiv">
+                                </div>
+                            </div>
+                        </div>
                         <div
                             class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
                             <svg class="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
@@ -206,6 +164,24 @@
         </main>
     </div>
     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child, update, remove, onValue, push } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
+            authDomain: "wishlist-ras1.firebaseapp.com",
+            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "wishlist-ras1",
+            storageBucket: "wishlist-ras1.appspot.com",
+            messagingSenderId: "380828569562",
+            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const realdb = getDatabase();
+
         // Refs
         let userlink = document.getElementById("userlink");
         let signoutlink = document.getElementById("signoutlink");
@@ -213,150 +189,82 @@
         let login_btn = document.getElementById("login_here");
         var currentuser = null;
 
-        var Files = [];
-        var FileReaders = [];
-        var ImageLinksArray = [];
-        const imgDiv = document.getElementById("imagesDiv");
-        const selBtn = document.getElementById("selimgbtn");
-        const addBtn = document.getElementById("addprodbtn");
+        var outerDiv = document.getElementById("productsDiv");
+        var ArrayOfProducts = [];
 
-        const prodName = document.getElementById("nameInput");
-        const prodPrice = document.getElementById("priceInput");
-        const prodLink = document.getElementById("linkInput");
+        // Get username + UID
+        var usernameShare = document.getElementById("username");
+
+        const url = window.location.href;
+        const name = url.substring(url.indexOf('#') + 1, url.indexOf('|'));
+        const UID = url.substring(url.indexOf('|') + 1);
+
+        usernameShare.innerText = name;
 
         // Functions
-        function OpenFileDialog() {
-            let inp = document.createElement("input");
-            inp.type = "file";
-            inp.multiple = "multiple";
+        function shareUser(userNAME, userID) {
+            const dbRef = ref(realdb);
 
-            inp.onchange = (e) => {
-                AssignImgsToFilesArray(e.target.files);
-                CreateImgTags();
-            }
+            get(child(dbRef, "Userlist/" + userNAME)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    let shareUID = snapshot.val().uniqueID;
+                    if (userID == shareUID) {
+                        get(child(dbRef, "Userlist/" + name + "/wishes"))
+                            .then((snapshot) => {
+                                snapshot.forEach(prod => {
+                                    ArrayOfProducts.push(prod.val());
+                                });
 
-            inp.click();
-        }
-
-        function AssignImgsToFilesArray(thefiles) {
-            let num = Files.length + thefiles.length;
-            let looplim = (num <= 1) ? thefiles.length : (1 - Files.length);
-
-            for (let i = 0; i < looplim; i++) {
-                Files.push(thefiles[i]);
-            }
-
-            if (num > 10) alert("Maximum images allowed are 1");
-        }
-
-        function CreateImgTags() {
-            imgDiv.innerHTML = "";
-            imgDiv.classList.add("ImagesDivStyle");
-
-            for (let i = 0; i < Files.length; i++) {
-                FileReaders[i] = new FileReader();
-
-                FileReaders[i].onload = function () {
-                    var img = document.createElement("img");
-                    img.id = "imgno" + i;
-                    img.classList.add("imgs", "outline", "outline-1", "outline-offset-4", "outline-blue-500", "rounded-md");
-                    img.src = FileReaders[i].result;
-                    imgDiv.append(img);
+                                AddAllProducts();
+                            });
+                    } else {
+                        alert("User does not exist");
+                    }
+                } else {
+                    alert("User doesn't exist");
                 }
-
-                FileReaders[i].readAsDataURL(Files[i]);
-            }
-
-            let lab = document.getElementById("label");
-            lab.innerHTML = "clear images";
-            lab.style = "cursor:pointer;display:block;color:navy;font-size:12px;";
-            lab.addEventListener("click", ClearImages);
-            imgDiv.append(lab);
-        }
-
-        function ClearImages() {
-            Files = [];
-            ImageLinksArray = [];
-            imgDiv.innerHTML = "";
-            imgDiv.classList.remove("ImagesDivStyle")
-
-        }
-
-        selBtn.addEventListener('click', OpenFileDialog);
-        addBtn.addEventListener('click', UploadAllImages);
-
-        function getShortTitle() {
-            let namey = prodName.value.substring(0, 20);
-            return namey.replace(/[^a-zA-Z0-9]/g, "");
-        }
-
-        function GetImgUploadProgress() {
-            return 'Images uploaded ' + ImageLinksArray.length + " of " + Files.length;
-        }
-
-        function IsAllImagesUploaded() {
-            return ImageLinksArray.length == Files.length;
-        }
-
-        //Upload to DB
-        function RestoreBack() {
-            selBtn.disabled = false;
-            addBtn.disabled = false;
-        }
-
-        function UploadAllImages() {
-            selBtn.disabled = true;
-            addBtn.disabled = true;
-
-            ImageLinksArray = [];
-
-            for (let i = 0; i < Files.length; i++) {
-                UploadAnImage(Files[i], i);
-            }
-        }
-
-        function UploadAnImage(imgToUpload, imgNo) {
-            const metadata = {
-                contentType: imgToUpload.type
-            };
-
-            const storage = getStorage();
-
-            const ImageAddress = "WishlistImages/" + currentuser.username + "/" + getShortTitle() + "/img#" + (imgNo + 1);
-
-            const storageRef = sRef(storage, ImageAddress);
-
-            const UploadTask = uploadBytesResumable(storageRef, imgToUpload, metadata);
-
-            UploadTask.on('state_changed', (snapshot) => {
-                proglab.innerHTML = GetImgUploadProgress();
-            },
-
-                (error) => {
-                    alert("Error: image upload failed");
-                },
-
-                () => {
-                    getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
-                        ImageLinksArray.push(downloadURL);
-                        if (IsAllImagesUploaded()) {
-                            proglab.innerHTML = "all images uploaded";
-                            UploadAProduct();
-                        }
-                    })
-                });
-        }
-
-        function UploadAProduct() {
-            set(ref(realdb, "Userlist/" + currentuser.username + "/wishes/" + getShortTitle()), {
-                ProductTitle: prodName.value,
-                ProductPrice: prodPrice.value,
-                ProductLink: prodLink.value,
-                LinkOfImagesArray: ImageLinksArray
             });
+        }
+        shareUser(name, UID);
 
-            window.alert("Product created successfully");
-            RestoreBack();
+        function AddAllProducts() {
+            let i = 0;
+            ArrayOfProducts.forEach(prod => {
+                AddAProduct(prod, i++);
+            });
+        }
+
+        function AddAProduct(product, index) {
+            let html =
+                `
+                <div
+                    class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                    <img src="`+ product.LinkOfImagesArray[0] + `"
+                        class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                        id="thumb`+ index + `">
+                </div>
+                <div class="mt-2 flex justify-between flex-wrap">
+                    <div>
+                        <h3 class="text-sm text-gray-700 title" id="title`+ index + `">
+                            `+ product.ProductTitle + `
+                        </h3>
+                    </div>
+                    <p class="text-sm font-medium text-gray-900 price">Kr. `+ product.ProductPrice + `</p>
+                    <a href="`+ product.ProductLink + `"
+                        class="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700 mx-auto mt-6 grow w-100 text-center px-8 detbtns"
+                        id="detbtn" target="_blank">
+                        See product
+                        <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
+                    </a>
+                </div>
+                `;
+
+            let newProd = document.createElement("a");
+            newProd.setAttribute("href", "https://" + product.ProductLink);
+            newProd.setAttribute("target", "_blank");
+            newProd.classList.add("productcard", "p-2", "hover:outline", "hover:outline-blue-500", "outline-1", "outline-transparent", "rounded-lg", "transition-all");
+            newProd.innerHTML = html;
+            outerDiv.append(newProd);
         }
 
         function getUsername() {
@@ -373,7 +281,13 @@
             sessionStorage.removeItem("user");
             localStorage.removeItem("user");
             localStorage.removeItem("keepLoggedIn");
-            window.location = "home.html"
+            window.location = "login.html"
+        }
+
+        function getShortTitle() {
+            if (title.length > 20) title = title.substring(0, 17);
+            else return title;
+            return title + "...";
         }
 
         // Window Load
@@ -384,14 +298,18 @@
                 userlink.classList.replace("nav-link", "btn");
                 userlink.classList.add("btn-primary");
                 userlink.href = "index.html";
+                document.getElementById("showallprods").remove();
+                document.getElementById("addproduct").remove();
+                document.getElementById("avatar").remove();
+                document.getElementById("notification").remove();
 
                 signoutlink.innerText = "Login";
                 signoutlink.classList.replace("nav-link", "btn");
                 signoutlink.classList.add("btn-success");
                 signoutlink.href = "login.html";
-                window.location = "login.html";
             } else {
                 userlink.innerText = currentuser.username;
+                header.innerText = "Welcome, " + currentuser.fullname + ".";
                 userlink.classList.replace("btn", "nav-link");
                 userlink.classList.add("btn-primary");
                 userlink.href = "#";
@@ -399,28 +317,11 @@
                 signoutlink.innerText = "Sign out";
                 signoutlink.classList.replace("btn", "nav-link");
                 signoutlink.classList.add("btn-success");
-                signoutlink.href = "javascript:signout()";
+                signoutlink.addEventListener("click", signout);
             }
         }
 
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child, update, remove, onValue, push } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
-        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
-            authDomain: "wishlist-ras1.firebaseapp.com",
-            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "wishlist-ras1",
-            storageBucket: "wishlist-ras1.appspot.com",
-            messagingSenderId: "380828569562",
-            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const realdb = getDatabase();
     </script>
 </body>
 
