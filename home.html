@@ -290,7 +290,7 @@
                 signoutlink.href = "login.html";
                 window.location = "login.html";
             } else {
-                userlink.innerText = currentuser.username;
+                userlink.innerText = currentuser.username + currentuser.uniqueID;
                 header.innerText = "Welcome, " + currentuser.fullname + ".";
                 userlink.classList.replace("btn", "nav-link");
                 userlink.classList.add("btn-primary");
