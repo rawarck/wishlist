@@ -291,8 +291,7 @@
                 signoutlink.href = "login.html";
                 window.location = "login.html";
             } else {
-                userlink.innerText = currentuser.uniqueID;
-                /*shareBtn.setAttribute("shareLink", window.location.origin + "/wishlist/share.html#" + currentuser.username + "|" + currentuser.uniqueID);*/
+                userlink.innerText = currentuser.username;
                 header.innerText = "Welcome, " + currentuser.fullname + ".";
                 userlink.classList.replace("btn", "nav-link");
                 userlink.classList.add("btn-primary");
