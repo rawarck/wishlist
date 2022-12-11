@@ -192,13 +192,11 @@
         var ArrayOfProducts = [];
 
         // Get username + UID
-        var usernameShare = document.getElementById("username");
+
 
         const url = window.location.href;
         const name = url.substring(url.indexOf('#') + 1, url.indexOf('|'));
         const UID = url.substring(url.indexOf('|') + 1);
-
-        usernameShare.innerText = name;
 
         // Functions
         function shareUser(userNAME, userID) {
@@ -216,8 +214,18 @@
 
                                 AddAllProducts();
                             });
-                    } else {
-                        alert("User does not exist");
+                    }
+                } else {
+                    alert("User doesn't exist");
+                }
+            });
+            get(child(dbRef, "Userlist/" + userNAME)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    let realname = snapshot.val().fullname;
+                    let shareUID = snapshot.val().uniqueID;
+                    if (userID == shareUID) {
+                        var usernameShare = document.getElementById("username");
+                        usernameShare.innerText = realname;
                     }
                 } else {
                     alert("User doesn't exist");
@@ -238,12 +246,12 @@
                 `
                 <div
                     class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                    <img src="`+ product.LinkOfImagesArray[0] + `"
+                    <img src="`+ product.ProductImage + `"
                         class="h-full w-full object-cover object-center lg:h-full lg:w-full"
                         id="thumb`+ index + `">
                 </div>
                 <div class="mt-2 flex justify-between flex-wrap">
-                    <div>
+                    <div class="min-w-[50%]">
                         <h3 class="text-sm text-gray-700 title" id="title`+ index + `">
                             `+ product.ProductTitle + `
                         </h3>
@@ -308,10 +316,11 @@
                 signoutlink.href = "login.html";
             } else {
                 userlink.innerText = currentuser.username;
-                header.innerText = "Welcome, " + currentuser.fullname + ".";
                 userlink.classList.replace("btn", "nav-link");
                 userlink.classList.add("btn-primary");
                 userlink.href = "#";
+
+                usernameShare.innerText = currentuser.fullname;
 
                 signoutlink.innerText = "Sign out";
                 signoutlink.classList.replace("btn", "nav-link");

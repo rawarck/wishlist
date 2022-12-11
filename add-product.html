@@ -108,7 +108,8 @@
         </div>
     </nav>
     <div class="isolate bg-white">
-        <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
+        <div
+            class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[0rem] sm:left-[32rem]">
             <svg class="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
                 viewBox="0 0 1155 678" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill="url(#45de2b6b-92d5-4d68-a6a0-9b9b2abad533)" fill-opacity=".3"
@@ -130,32 +131,41 @@
                             <h1 class="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">Add product</h1>
                             <p class="mt-6 text-lg leading-8 text-gray-600 sm:text-center">Fill out the form to add a
                                 product to the wishlist</p>
-                            <div class="lg:flex justify-between">
-                                <div class="mt-2">
+                            <div class="lg:flex justify-between flex-wrap">
+                                <div class="mt-2 w-[47%]">
                                     <label for="price" class="block text-sm font-medium text-gray-700">Product
                                         name</label>
-                                    <div class="relative mt-1 rounded-md shadow-sm w-60">
+                                    <div class="relative mt-1 rounded-md shadow-sm">
                                         <input type="text" name="name" id="nameInput"
                                             class="block w-full rounded-md border-gray-300 pl-4 pr-12 h-8 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             placeholder="Steam Deck">
                                     </div>
                                 </div>
-                                <div class="mt-2">
+                                <div class="mt-2 w-[47%]">
                                     <label for="price" class="block text-sm font-medium text-gray-700">Product
                                         price</label>
-                                    <div class="relative mt-1 rounded-md shadow-sm w-60">
+                                    <div class="relative mt-1 rounded-md shadow-sm">
                                         <input type="number" name="price" id="priceInput"
                                             class="block w-full rounded-md border-gray-300 pl-4 pr-1 h-8 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             placeholder="0.00">
                                     </div>
                                 </div>
-                                <div class="mt-2">
+                                <div class="mt-2 w-[47%]">
                                     <label for="price" class="block text-sm font-medium text-gray-700">Product
                                         link</label>
-                                    <div class="relative mt-1 rounded-md shadow-sm w-60">
+                                    <div class="relative mt-1 rounded-md shadow-sm">
                                         <input type="text" name="link" id="linkInput"
                                             class="block w-full rounded-md border-gray-300 pl-4 pr-12 h-8 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             placeholder="https://www.google.dk">
+                                    </div>
+                                </div>
+                                <div class="mt-2 w-[47%]">
+                                    <label for="price" class="block text-sm font-medium text-gray-700">Product
+                                        image link</label>
+                                    <div class="relative mt-1 rounded-md shadow-sm">
+                                        <input type="text" name="link" id="imageInput"
+                                            class="block w-full rounded-md border-gray-300 pl-4 pr-12 h-8 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            placeholder="https://i.imgur.com/AD3MbBi.jpeg">
                                     </div>
                                 </div>
                             </div>
@@ -167,10 +177,10 @@
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-1">
                                     Add product
                                 </button>
-                                <button id="selimgbtn"
+                                <!--<button id="selimgbtn"
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-1">
                                     Select image
-                                </button>
+                                </button>-->
                             </div>
 
                             <div class="mt-8 flex gap-x-4 sm:justify-center">
@@ -223,9 +233,10 @@
         const prodName = document.getElementById("nameInput");
         const prodPrice = document.getElementById("priceInput");
         const prodLink = document.getElementById("linkInput");
+        const prodImage = document.getElementById("imageInput");
 
         // Functions
-        function OpenFileDialog() {
+        /*function OpenFileDialog() {
             let inp = document.createElement("input");
             inp.type = "file";
             inp.multiple = "multiple";
@@ -282,15 +293,15 @@
 
         }
 
-        selBtn.addEventListener('click', OpenFileDialog);
-        addBtn.addEventListener('click', UploadAllImages);
+        selBtn.addEventListener('click', OpenFileDialog);*/
+        addBtn.addEventListener('click', UploadAProduct);
 
         function getShortTitle() {
             let namey = prodName.value.substring(0, 20);
             return namey.replace(/[^a-zA-Z0-9]/g, "");
         }
 
-        function GetImgUploadProgress() {
+        /*function GetImgUploadProgress() {
             return 'Images uploaded ' + ImageLinksArray.length + " of " + Files.length;
         }
 
@@ -345,18 +356,23 @@
                         }
                     })
                 });
-        }
+        }*/
 
         function UploadAProduct() {
+            if (prodName.value === "" || prodPrice.value === "" || prodLink.value === "" || prodImage.value === "") {
+                window.alert("Please fill out all values before submitting.");
+                return;
+            }
+
             set(ref(realdb, "Userlist/" + currentuser.username + "/wishes/" + getShortTitle()), {
                 ProductTitle: prodName.value,
                 ProductPrice: prodPrice.value,
                 ProductLink: prodLink.value,
-                LinkOfImagesArray: ImageLinksArray
+                ProductImage: prodImage.value
             });
 
             window.alert("Product created successfully");
-            RestoreBack();
+            /*RestoreBack();*/
         }
 
         function getUsername() {
