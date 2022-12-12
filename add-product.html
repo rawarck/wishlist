@@ -99,7 +99,7 @@
                     <div class="relative ml-3">
                         <div>
                             <a id="signoutlink"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">Sign
                                 Out</a>
                         </div>
                     </div>
@@ -216,6 +216,26 @@
         </main>
     </div>
     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child, update, remove, onValue, push } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
+            authDomain: "wishlist-ras1.firebaseapp.com",
+            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "wishlist-ras1",
+            storageBucket: "wishlist-ras1.appspot.com",
+            messagingSenderId: "380828569562",
+            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const realdb = getDatabase();
+
+
         // Refs
         let userlink = document.getElementById("userlink");
         let signoutlink = document.getElementById("signoutlink");
@@ -415,28 +435,9 @@
                 signoutlink.innerText = "Sign out";
                 signoutlink.classList.replace("btn", "nav-link");
                 signoutlink.classList.add("btn-success");
-                signoutlink.href = "javascript:signout()";
+                signoutlink.addEventListener("click", signout);
             }
         }
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child, update, remove, onValue, push } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
-        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAWBf31xE9IYhNGqTDdKSuH3ImsGPoqi3A",
-            authDomain: "wishlist-ras1.firebaseapp.com",
-            databaseURL: "https://wishlist-ras1-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "wishlist-ras1",
-            storageBucket: "wishlist-ras1.appspot.com",
-            messagingSenderId: "380828569562",
-            appId: "1:380828569562:web:d93c7a5d597a8b0aaa7ae3"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const realdb = getDatabase();
     </script>
 </body>
 
