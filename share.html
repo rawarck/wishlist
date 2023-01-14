@@ -271,7 +271,7 @@
             let newProd = document.createElement("a");
             newProd.setAttribute("href", "https://" + product.ProductLink);
             newProd.setAttribute("target", "_blank");
-            newProd.classList.add("productcard", "p-2", "hover:outline", "hover:outline-blue-500", "outline-1", "outline-transparent", "rounded-lg", "transition-all");
+            newProd.classList.add("productcard", "p-2", "hover:outline", "hover:outline-blue-500", "outline-1", "outline-transparent", "rounded-lg", "transition-all", "flex", "flex-col");
             newProd.innerHTML = html;
             outerDiv.append(newProd);
         }
@@ -322,9 +322,9 @@
                 userlink.classList.add("btn-primary");
                 userlink.href = "#";
 
-                usernameShare.innerText = currentuser.fullname;
+                username.innerText = currentuser.fullname;
 
-                signoutlink.innerText = "Sign out";
+                signoutlink.innerText = "Sign Out";
                 signoutlink.classList.replace("btn", "nav-link");
                 signoutlink.classList.add("btn-success");
                 signoutlink.addEventListener("click", signout);
