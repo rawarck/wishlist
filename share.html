@@ -195,8 +195,8 @@
 
 
         const url = window.location.href;
-        const name = url.substring(url.indexOf('#') + 1, url.indexOf('|'));
-        const UID = url.substring(url.indexOf('|') + 1);
+        const name = url.substring(url.indexOf('#') + 1, url.indexOf('&'));
+        const UID = url.substring(url.indexOf('&') + 1);
 
         // Functions
         function shareUser(userNAME, userID) {
