@@ -168,6 +168,7 @@
                                             placeholder="https://i.imgur.com/AD3MbBi.jpeg">
                                     </div>
                                 </div>
+                                <input type="text" name="link" id="PUID" class="hidden">
                             </div>
 
                             <div id="imagesDiv" class="flex justify-center mt-4"></div>
@@ -254,6 +255,7 @@
         const prodPrice = document.getElementById("priceInput");
         const prodLink = document.getElementById("linkInput");
         const prodImage = document.getElementById("imageInput");
+        const puid = document.getElementById("PUID");
 
         // Functions
         /*function OpenFileDialog() {
@@ -377,6 +379,25 @@
                     })
                 });
         }*/
+        function generateRandomString() {
+            const possibleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+            let randomString = '';
+
+            for (let i = 0; i < 16; i++) {
+                const randomCharacter = possibleCharacters.charAt(Math.floor(Math.random() * possibleCharacters.length));
+                randomString += randomCharacter;
+            }
+
+            const timestamp = Date.now();
+            randomString += timestamp;
+
+            return randomString;
+        }
+
+        const randomString = generateRandomString();
+        const uniqueID = document.getElementById('PUID');
+        uniqueID.value = randomString;
 
         function UploadAProduct() {
             if (prodName.value === "" || prodPrice.value === "" || prodLink.value === "" || prodImage.value === "") {
@@ -388,7 +409,8 @@
                 ProductTitle: prodName.value,
                 ProductPrice: prodPrice.value,
                 ProductLink: prodLink.value,
-                ProductImage: prodImage.value
+                ProductImage: prodImage.value,
+                ProductID: puid.value
             });
 
             window.alert("Product created successfully");

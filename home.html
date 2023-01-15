@@ -246,33 +246,34 @@
         function AddAProduct(product, index) {
             let html =
                 `
-                <div
-                    class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                    <img src="`+ product.ProductImage + `"
-                        class="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                        id="thumb`+ index + `">
-                </div>
-                <div class="mt-2 flex justify-between flex-wrap grow">
-                    <div class="mb-6 flex flex-row justify-between w-full">
-                        <div class="max-w-[50%]">
-                            <h3 class="text-sm text-gray-700 title" id="title`+ index + `">
-                                `+ product.ProductTitle + `
-                            </h3>
-                        </div>
-                        <p class="text-sm font-medium text-gray-900 price flex">Kr. `+ product.ProductPrice + `</p>
+                <a href="`+ product.ProductLink + `" target="_blank" class="mb-6 flex flex-row justify-between w-full relative">
+                    <span class="hidden" id="productid" data-product-id="`+ product.ProductID + `"></span>
+                    <div
+                        class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                        <img src="`+ product.ProductImage + `"
+                            class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                            id="thumb`+ index + `">
                     </div>
-                    <a href="`+ product.ProductLink + `"
-                        class="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700 mx-auto grow w-100 text-center px-8 max-h-10 mt-auto detbtns"
-                        id="detbtn" target="_blank">
-                        See product
-                        <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
-                    </a>
-                </div>
+                    <div class="mt-2 flex justify-between flex-wrap grow">
+                        <div class="flex flex-row justify-between w-full">
+                            <div class="max-w-[50%]">
+                                <h3 class="text-sm text-gray-700 title" id="title`+ index + `">
+                                    `+ product.ProductTitle + `
+                                </h3>
+                            </div>
+                            <p class="text-sm font-medium text-gray-900 price flex">Kr. `+ product.ProductPrice + `</p>
+                        </div>
+                        <a href="`+ product.ProductLink + `"
+                            class="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700 mx-auto grow w-full text-center px-8 max-h-10 mt-auto detbtns"
+                            id="detbtn" target="_blank">
+                            See product
+                            <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </a>
                 `;
 
-            let newProd = document.createElement("a");
-            newProd.setAttribute("href", product.ProductLink);
-            newProd.setAttribute("target", "_blank");
+            let newProd = document.createElement("div");
             newProd.classList.add("productcard", "p-2", "hover:outline", "hover:outline-blue-500", "outline-1", "outline-transparent", "rounded-lg", "transition-all", "flex", "flex-col");
             newProd.innerHTML = html;
             outerDiv.append(newProd);
